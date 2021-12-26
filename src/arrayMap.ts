@@ -4,7 +4,7 @@
  */
 export class ArrayMultiMap <TKeys extends any[] = any[], TValue=string> implements Map<TKeys, TValue> {
   private _size = 0
-  private _keys_lens?: number
+  private _keysLens?: number
   private _data = new Map<any, any>()
 
   get [Symbol.toStringTag]() {
@@ -22,22 +22,22 @@ export class ArrayMultiMap <TKeys extends any[] = any[], TValue=string> implemen
   }
 
   get keysLens () {
-    return this._keys_lens
+    return this._keysLens
   }
 
   constructor(keysLens?: number) {
-    this._keys_lens = keysLens
+    this._keysLens = keysLens
   }
 
   private checkKeysArg(keys: TKeys) {
-    if (keys.length !== this._keys_lens) {
-      throw new Error(`The length of the keys shouldn't change. old: ${this._keys_lens}, yours:${keys.length}`)
+    if (keys.length !== this._keysLens) {
+      throw new Error(`The length of the keys shouldn't change. old: ${this._keysLens}, yours:${keys.length}`)
     }
   }
 
   set(keys: TKeys, data: TValue) {
-    if (this._keys_lens === undefined) {
-      this._keys_lens = keys.length
+    if (this._keysLens === undefined) {
+      this._keysLens = keys.length
     }
     this.checkKeysArg(keys)
     keys.reduce((last: Map<any, any>, key, i) => {
@@ -137,10 +137,10 @@ export class ArrayMultiMap <TKeys extends any[] = any[], TValue=string> implemen
   
   forEach(callbackfn: (value: TValue, keys: TKeys, map: Map<TKeys, TValue>) => void, thisArg?: any) {
     const foreachIfMap = (map: any, keys: any[] = []) => {
-      if (this._keys_lens === undefined) {
+      if (this._keysLens === undefined) {
         throw new Error("Array Multi Map not init")
       }
-      if (keys.length < this._keys_lens) {
+      if (keys.length < this._keysLens) {
         // 未检索到指定层次
         if(!(map instanceof Map)) {
           throw new Error("Inner Map Structure Error")
@@ -159,10 +159,10 @@ export class ArrayMultiMap <TKeys extends any[] = any[], TValue=string> implemen
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this
     const foreachIfMap = function* (map: any, keys: any[] = []): any {
-      if (that._keys_lens === undefined) {
+      if (that._keysLens === undefined) {
         throw new Error("Array Multi Map not init")
       }
-      if (keys.length < that._keys_lens) {
+      if (keys.length < that._keysLens) {
         // 未检索到指定层次
         if(!(map instanceof Map)) {
           throw new Error("Inner Map Structure Error")
