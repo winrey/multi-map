@@ -4,7 +4,7 @@
  */
 export class ArrayMultiMap <TKeys extends any[] = any[], TValue=string> implements Map<TKeys, TValue> {
   private _size = 0
-  private _keysLens?: number
+  private _keysLens: number
   private _data = new Map<any, any>()
 
   get [Symbol.toStringTag]() {
@@ -25,7 +25,7 @@ export class ArrayMultiMap <TKeys extends any[] = any[], TValue=string> implemen
     return this._keysLens
   }
 
-  constructor(keysLens?: number) {
+  constructor(keysLens: number) {
     this._keysLens = keysLens
   }
 
@@ -36,6 +36,7 @@ export class ArrayMultiMap <TKeys extends any[] = any[], TValue=string> implemen
   }
 
   set(keys: TKeys, data: TValue) {
+    /* istanbul ignore if  */
     if (this._keysLens === undefined) {
       this._keysLens = keys.length
     }
@@ -122,7 +123,7 @@ export class ArrayMultiMap <TKeys extends any[] = any[], TValue=string> implemen
       // need clear
       maps[i - 1].delete(keys[i - 1])
     }
-    const success = result === exit ? false : result
+    const success = result === exit ? false : result as boolean
     if (success) {
       this._size -= 1
     }
@@ -137,11 +138,9 @@ export class ArrayMultiMap <TKeys extends any[] = any[], TValue=string> implemen
   
   forEach(callbackfn: (value: TValue, keys: TKeys, map: Map<TKeys, TValue>) => void, thisArg?: any) {
     const foreachIfMap = (map: any, keys: any[] = []) => {
-      if (this._keysLens === undefined) {
-        throw new Error("Array Multi Map not init")
-      }
       if (keys.length < this._keysLens) {
         // 未检索到指定层次
+        /* istanbul ignore if  */
         if(!(map instanceof Map)) {
           throw new Error("Inner Map Structure Error")
         }
@@ -159,11 +158,9 @@ export class ArrayMultiMap <TKeys extends any[] = any[], TValue=string> implemen
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this
     const foreachIfMap = function* (map: any, keys: any[] = []): any {
-      if (that._keysLens === undefined) {
-        throw new Error("Array Multi Map not init")
-      }
       if (keys.length < that._keysLens) {
         // 未检索到指定层次
+        /* istanbul ignore if  */
         if(!(map instanceof Map)) {
           throw new Error("Inner Map Structure Error")
         }
