@@ -103,7 +103,7 @@ export class ArrayMultiMap <TKeys extends any[] = any[], TValue=string> implemen
   delete(keys: TKeys) {
     this.checkKeysArg(keys)
     const exit = Symbol("not found")
-    const maps: Map<any, any>[] = []
+    const maps: Map<any, any>[] = [this._data]
     const result = keys.reduce((last: Map<any, any> | symbol, key, i) => {
       if (last === exit) {
         return exit
@@ -117,7 +117,7 @@ export class ArrayMultiMap <TKeys extends any[] = any[], TValue=string> implemen
         return exit
       }
       const next = last.get(key)
-      maps.push(last)
+      maps.push(next)
       return next
     }, this._data)
 
@@ -126,7 +126,7 @@ export class ArrayMultiMap <TKeys extends any[] = any[], TValue=string> implemen
     }
 
     // clear unnecessary map
-    for(let i = keys.length - 2; i > 0; i--) {
+    for(let i = keys.length - 1; i > 0; i--) {
       if (maps[i].size) {
         break;
       }

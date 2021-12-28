@@ -53,6 +53,7 @@ export class ObjectMultiMap <TKey extends Record<string, any> = Record<string, a
   }
 
   private checkAndParseKeys(key: TKey, ignoredExtarField?: boolean) {
+    /* istanbul ignore next */
     ignoredExtarField = ignoredExtarField ?? this._opts.ignoredExtarField
     if (typeof key !== "object" || key instanceof Array) {
       throw new TypeError("key should be an obj")

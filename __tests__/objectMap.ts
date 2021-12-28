@@ -17,6 +17,7 @@ const obj3 = {
 it("could be created", () => {
   new ObjectMultiMap(["233"])
   new ObjectMultiMap({233: "", "666": ""})
+  new ObjectMultiMap({233: "", "666": ""}, {})
 })
 
 it("should check input error", () => {
@@ -55,6 +56,7 @@ it("could be set and get", () => {
 
 it("should throw if lens doesn't match", () => {
   const map = new ObjectMultiMap(["openId", "appId"])
+  expect(() => map.set("" as any, "")).toThrow()
   expect(() => map.set({}, "")).toThrow()
   expect(() => map.set({"openId": 234}, "")).toThrow()
   expect(() => map.get({"openId": 234, "unionId": 3444})).toThrow()
@@ -149,4 +151,9 @@ it("values could be for iterable", () => {
   }
 })
 
+test("meta", () => {
+  const obj = new ObjectMultiMap(obj1)
+  expect(obj.keyIndex).toEqual(["openId", "appId"])
+  expect(String(obj)).toBe("[object ObjectMultiMap]")
+})
 

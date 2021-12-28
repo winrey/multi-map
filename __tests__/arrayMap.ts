@@ -88,14 +88,16 @@ it("could delete and clear", () => {
 
   expect(map.delete(["4", "5", "9"])).toBeFalsy()
   expect(map.delete(["4", "5", "6"])).toBeTruthy()
+  expect(map.delete(["4", "6", "6"])).toBeTruthy()
   expect(map.delete(["4", "5", "9"])).toBeFalsy()
   
-  expect(map.size).toBe(3)
+  expect(map.size).toBe(2)
   expect(map.has(["4", "5", "6"])).toBeFalsy()
+  expect(map.has(["4", "6", "6"])).toBeFalsy()
   expect(map.get(["4", "5", "6"])).toBe(undefined)
+  expect(map.get(["4", "6", "6"])).toBe(undefined)
 
   expect(map.has(["4", "5", "8"])).toBeTruthy()
-  expect(map.has(["4", "6", "6"])).toBeTruthy()
   expect(map.has(["5", "5", "6"])).toBeTruthy()
 
   map.clear()
@@ -173,4 +175,9 @@ it("values could be for iterable", () => {
   }
 })
 
+test("meta", () => {
+  const arr = new ArrayMultiMap(1)
+  expect(arr.keysLens).toBe(1)
+  expect(String(arr)).toBe("[object ArrayMultiMap]")
+})
 

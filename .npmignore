@@ -10,3 +10,4 @@ jest.config.ts
 gulpfile.js
 __tests__
 tests
+coverage
