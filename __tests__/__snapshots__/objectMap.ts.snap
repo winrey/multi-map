@@ -1,0 +1,121 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`could be foreach 1`] = `"233"`;
+
+exports[`could be foreach 2`] = `
+Object {
+  "appId": 4,
+  "openId": 6,
+}
+`;
+
+exports[`could be foreach 3`] = `"2333"`;
+
+exports[`could be foreach 4`] = `
+Object {
+  "appId": 5,
+  "openId": 6,
+}
+`;
+
+exports[`could be foreach 5`] = `"23333"`;
+
+exports[`could be foreach 6`] = `
+Object {
+  "appId": 5,
+  "openId": 4,
+}
+`;
+
+exports[`could be iterable 1`] = `
+Array [
+  Object {
+    "appId": 4,
+    "openId": 6,
+  },
+  "233",
+]
+`;
+
+exports[`could be iterable 2`] = `
+Array [
+  Object {
+    "appId": 5,
+    "openId": 6,
+  },
+  "2333",
+]
+`;
+
+exports[`could be iterable 3`] = `
+Array [
+  Object {
+    "appId": 5,
+    "openId": 4,
+  },
+  "23333",
+]
+`;
+
+exports[`entries could be for iterable 1`] = `Object {}`;
+
+exports[`entries could be for iterable 2`] = `
+Array [
+  Object {
+    "appId": 4,
+    "openId": 6,
+  },
+  "233",
+]
+`;
+
+exports[`entries could be for iterable 3`] = `
+Array [
+  Object {
+    "appId": 5,
+    "openId": 6,
+  },
+  "2333",
+]
+`;
+
+exports[`entries could be for iterable 4`] = `
+Array [
+  Object {
+    "appId": 5,
+    "openId": 4,
+  },
+  "23333",
+]
+`;
+
+exports[`keys could be for iterable 1`] = `Object {}`;
+
+exports[`keys could be for iterable 2`] = `
+Object {
+  "appId": 4,
+  "openId": 6,
+}
+`;
+
+exports[`keys could be for iterable 3`] = `
+Object {
+  "appId": 5,
+  "openId": 6,
+}
+`;
+
+exports[`keys could be for iterable 4`] = `
+Object {
+  "appId": 5,
+  "openId": 4,
+}
+`;
+
+exports[`values could be for iterable 1`] = `Object {}`;
+
+exports[`values could be for iterable 2`] = `"233"`;
+
+exports[`values could be for iterable 3`] = `"2333"`;
+
+exports[`values could be for iterable 4`] = `"23333"`;

@@ -26,6 +26,12 @@ export class ArrayMultiMap <TKeys extends any[] = any[], TValue=string> implemen
   }
 
   constructor(keysLens: number) {
+    if (keysLens <= 0) {
+      throw new TypeError("key lens should greater than one")
+    }
+    if (typeof keysLens !== "number") {
+      throw new TypeError("key lens should be a number")
+    }
     this._keysLens = keysLens
   }
 
@@ -91,7 +97,7 @@ export class ArrayMultiMap <TKeys extends any[] = any[], TValue=string> implemen
       }
       return last.get(key)
     }, this._data)
-    return val === exit && val
+    return val === exit ? false : val
   }
 
   delete(keys: TKeys) {
@@ -111,23 +117,26 @@ export class ArrayMultiMap <TKeys extends any[] = any[], TValue=string> implemen
         return exit
       }
       const next = last.get(key)
-      maps.push(next)
+      maps.push(last)
       return next
     }, this._data)
 
+    if (result === exit) {
+      return false
+    }
+
     // clear unnecessary map
-    for(let i = keys.length - 1; i > 0; i--) {
-      if (maps[i]) {
+    for(let i = keys.length - 2; i > 0; i--) {
+      if (maps[i].size) {
         break;
       }
       // need clear
       maps[i - 1].delete(keys[i - 1])
     }
-    const success = result === exit ? false : result as boolean
-    if (success) {
+    if (result) {
       this._size -= 1
     }
-    return success
+    return result
   }
 
   clear(): void {
@@ -147,6 +156,7 @@ export class ArrayMultiMap <TKeys extends any[] = any[], TValue=string> implemen
         map.forEach((v, k) => {
           foreachIfMap(v, [...keys, k])
         })
+        return
       }
       // 检索到指定层次
       callbackfn.apply(thisArg, [map, keys as TKeys, this])
@@ -169,6 +179,7 @@ export class ArrayMultiMap <TKeys extends any[] = any[], TValue=string> implemen
             yield result
           }
         }
+        return
       }
       // 检索到指定层次?
       yield [keys, map]

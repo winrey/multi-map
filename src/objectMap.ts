@@ -40,17 +40,23 @@ export class ObjectMultiMap <TKey extends Record<string, any> = Record<string, a
   }
 
   private geneKeysIndex(key?: Array<string> | Record<string, any>) {
-    if (key instanceof Array) {
-      return key
-    } else if (key instanceof Object) {
-      return Object.keys(key)
-    } else {
-      throw new TypeError("keys invalid")
+    if (!key || !["object", "array"].includes(typeof key)) {
+      throw new TypeError("keyIndex type invalid")
     }
+    if (!(key instanceof Array)) {
+      key = Object.keys(key)
+    }
+    if (!key.length) {
+      throw new TypeError("keyIndex lens invalid")
+    }
+    return key as string[]
   }
 
   private checkAndParseKeys(key: TKey, ignoredExtarField?: boolean) {
     ignoredExtarField = ignoredExtarField ?? this._opts.ignoredExtarField
+    if (typeof key !== "object" || key instanceof Array) {
+      throw new TypeError("key should be an obj")
+    }
     let kkey = Object.keys(key)
     this._keyIndex.forEach(v => {
       const filtered = kkey.filter(k => k != v)

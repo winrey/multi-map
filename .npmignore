@@ -8,3 +8,5 @@ jest.config.ts
 .vscode
 .idea
 gulpfile.js
+__tests__
+tests

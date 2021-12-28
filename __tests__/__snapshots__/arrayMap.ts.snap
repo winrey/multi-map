@@ -1,0 +1,175 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`could be foreach 1`] = `"233"`;
+
+exports[`could be foreach 2`] = `
+Array [
+  "4",
+  "5",
+  "6",
+]
+`;
+
+exports[`could be foreach 3`] = `"2333"`;
+
+exports[`could be foreach 4`] = `
+Array [
+  "4",
+  "5",
+  "8",
+]
+`;
+
+exports[`could be foreach 5`] = `"23333"`;
+
+exports[`could be foreach 6`] = `
+Array [
+  "4",
+  "6",
+  "6",
+]
+`;
+
+exports[`could be foreach 7`] = `"233333"`;
+
+exports[`could be foreach 8`] = `
+Array [
+  "5",
+  "5",
+  "6",
+]
+`;
+
+exports[`could be iterable 1`] = `
+Array [
+  Array [
+    "4",
+    "5",
+    "6",
+  ],
+  "233",
+]
+`;
+
+exports[`could be iterable 2`] = `
+Array [
+  Array [
+    "4",
+    "5",
+    "8",
+  ],
+  "2333",
+]
+`;
+
+exports[`could be iterable 3`] = `
+Array [
+  Array [
+    "4",
+    "6",
+    "6",
+  ],
+  "23333",
+]
+`;
+
+exports[`could be iterable 4`] = `
+Array [
+  Array [
+    "5",
+    "5",
+    "6",
+  ],
+  "233333",
+]
+`;
+
+exports[`entries could be for iterable 1`] = `Object {}`;
+
+exports[`entries could be for iterable 2`] = `
+Array [
+  Array [
+    "4",
+    "5",
+    "6",
+  ],
+  "233",
+]
+`;
+
+exports[`entries could be for iterable 3`] = `
+Array [
+  Array [
+    "4",
+    "5",
+    "8",
+  ],
+  "2333",
+]
+`;
+
+exports[`entries could be for iterable 4`] = `
+Array [
+  Array [
+    "4",
+    "6",
+    "6",
+  ],
+  "23333",
+]
+`;
+
+exports[`entries could be for iterable 5`] = `
+Array [
+  Array [
+    "5",
+    "5",
+    "6",
+  ],
+  "233333",
+]
+`;
+
+exports[`keys could be for iterable 1`] = `Object {}`;
+
+exports[`keys could be for iterable 2`] = `
+Array [
+  "4",
+  "5",
+  "6",
+]
+`;
+
+exports[`keys could be for iterable 3`] = `
+Array [
+  "4",
+  "5",
+  "8",
+]
+`;
+
+exports[`keys could be for iterable 4`] = `
+Array [
+  "4",
+  "6",
+  "6",
+]
+`;
+
+exports[`keys could be for iterable 5`] = `
+Array [
+  "5",
+  "5",
+  "6",
+]
+`;
+
+exports[`values could be for iterable 1`] = `Object {}`;
+
+exports[`values could be for iterable 2`] = `"233"`;
+
+exports[`values could be for iterable 3`] = `"2333"`;
+
+exports[`values could be for iterable 4`] = `"23333"`;
+
+exports[`values could be for iterable 5`] = `"233333"`;
