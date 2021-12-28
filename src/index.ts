@@ -1,2 +1,2 @@
-export * from "./arrayMap"
-export * from "./objectMap"
+export * from './arrayMap';
+export * from './objectMap';
