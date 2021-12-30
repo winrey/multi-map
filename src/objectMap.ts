@@ -110,11 +110,11 @@ export class ObjectMultiMap<TKey extends Record<string, any> = Record<string, an
   }
 
   clone() {
-    const clone = new ObjectMultiMap<TKey, TValue>(this._keyIndex)
+    const clone = new ObjectMultiMap<TKey, TValue>(this._keyIndex);
     for (const [k, v] of this.entries()) {
-      clone.set(k, v)
+      clone.set(k, v);
     }
-    return clone
+    return clone;
   }
 
   clear(): void {

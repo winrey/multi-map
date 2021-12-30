@@ -41,11 +41,11 @@ export class ArrayMultiMap<TKeys extends any[] = any[], TValue = string> impleme
   }
 
   clone() {
-    const clone = new ArrayMultiMap<TKeys, TValue>(this.keysLens)
+    const clone = new ArrayMultiMap<TKeys, TValue>(this.keysLens);
     for (const [k, v] of this.entries()) {
-      clone.set(k, v)
+      clone.set(k, v);
     }
-    return clone
+    return clone;
   }
 
   set(keys: TKeys, data: TValue) {
