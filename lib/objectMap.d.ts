@@ -17,9 +17,10 @@ export declare class ObjectMultiMap<TKey extends Record<string, any> = Record<st
     private checkAndParseKeys;
     private index2Keys;
     set(keys: TKey, data: TValue): this;
-    get(keys: TKey, defaultVal?: TValue): TValue;
+    get(keys: TKey, defaultVal?: TValue): TValue | undefined;
     has(keys: TKey): boolean;
     delete(keys: TKey): any;
+    clone(): ObjectMultiMap<TKey, TValue>;
     clear(): void;
     forEach(callbackfn: (value: TValue, keys: TKey, map: Map<TKey, TValue>) => void, thisArg?: any): void;
     entries(): IterableIterator<[TKey, TValue]>;

@@ -11,8 +11,9 @@ export declare class ArrayMultiMap<TKeys extends any[] = any[], TValue = string>
     get keysLens(): number;
     constructor(keysLens: number);
     private checkKeysArg;
+    clone(): ArrayMultiMap<TKeys, TValue>;
     set(keys: TKeys, data: TValue): this;
-    get(keys: TKeys, defaultVal?: TValue): TValue;
+    get(keys: TKeys, defaultVal?: TValue): TValue | undefined;
     has(keys: TKeys): boolean;
     delete(keys: TKeys): any;
     clear(): void;
