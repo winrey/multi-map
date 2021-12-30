@@ -40,6 +40,14 @@ export class ArrayMultiMap<TKeys extends any[] = any[], TValue = string> impleme
     }
   }
 
+  clone() {
+    const clone = new ArrayMultiMap<TKeys, TValue>(this.keysLens)
+    for (const [k, v] of this.entries()) {
+      clone.set(k, v)
+    }
+    return clone
+  }
+
   set(keys: TKeys, data: TValue) {
     /* istanbul ignore if  */
     if (this._keysLens === undefined) {
@@ -63,7 +71,7 @@ export class ArrayMultiMap<TKeys extends any[] = any[], TValue = string> impleme
     return this;
   }
 
-  get(keys: TKeys, defaultVal?: TValue): TValue {
+  get(keys: TKeys, defaultVal?: TValue): TValue | undefined {
     this.checkKeysArg(keys);
     const exit = Symbol('not found');
     const val = keys.reduce((last: Map<any, any> | symbol, key, i) => {

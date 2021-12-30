@@ -84,6 +84,46 @@ Array [
 ]
 `;
 
+exports[`could clone 1`] = `"233"`;
+
+exports[`could clone 2`] = `
+Array [
+  4,
+  5,
+  6,
+]
+`;
+
+exports[`could clone 3`] = `"2333"`;
+
+exports[`could clone 4`] = `
+Array [
+  4,
+  5,
+  8,
+]
+`;
+
+exports[`could clone 5`] = `"999"`;
+
+exports[`could clone 6`] = `
+Array [
+  4,
+  5,
+  10,
+]
+`;
+
+exports[`could clone 7`] = `"23333"`;
+
+exports[`could clone 8`] = `
+Array [
+  4,
+  6,
+  6,
+]
+`;
+
 exports[`entries could be for iterable 1`] = `Object {}`;
 
 exports[`entries could be for iterable 2`] = `

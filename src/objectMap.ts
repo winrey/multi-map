@@ -94,7 +94,7 @@ export class ObjectMultiMap<TKey extends Record<string, any> = Record<string, an
     return this;
   }
 
-  get(keys: TKey, defaultVal?: TValue): TValue {
+  get(keys: TKey, defaultVal?: TValue): TValue | undefined {
     const k = this.checkAndParseKeys(keys);
     return this._data.get(k, defaultVal);
   }
@@ -107,6 +107,14 @@ export class ObjectMultiMap<TKey extends Record<string, any> = Record<string, an
   delete(keys: TKey) {
     const k = this.checkAndParseKeys(keys);
     return this._data.delete(k);
+  }
+
+  clone() {
+    const clone = new ObjectMultiMap<TKey, TValue>(this._keyIndex)
+    for (const [k, v] of this.entries()) {
+      clone.set(k, v)
+    }
+    return clone
   }
 
   clear(): void {

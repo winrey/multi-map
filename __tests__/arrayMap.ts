@@ -108,6 +108,22 @@ it("could delete and clear", () => {
   expect(map.has(["5", "5", "6"])).toBeFalsy()
 })
 
+it("could clone", () => {
+  const map = new ArrayMultiMap(3)
+  map.set([4, 5, 6], "233")
+  map.set([4, 5, 8], "2333")
+  map.set([4, 6, 6], "23333")
+  const clone = map.clone()
+  map.set([4, 5, 8], "6666")
+  clone.set([4, 5, 10], "999")
+
+  clone.forEach((v, k) => {
+    expect(v).toMatchSnapshot()
+    expect(k).toMatchSnapshot()
+  })
+})
+
+
 it("could be foreach", () => {
   const map = new ArrayMultiMap(3)
   map.set(["4", "5", "6"], "233")

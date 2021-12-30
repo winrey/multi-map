@@ -89,6 +89,21 @@ it("could delete and clear", () => {
   expect(map.has(obj2)).toBeFalsy()
 })
 
+it("could clone", () => {
+  const map = new ObjectMultiMap(obj1)
+  map.set(obj1, "233")
+  map.set(obj2, "2333")
+  map.set(obj3, "23333")
+  const clone = map.clone()
+  map.set(obj3, "6666")
+  clone.set(obj3, "999")
+
+  clone.forEach((v, k) => {
+    expect(v).toMatchSnapshot()
+    expect(k).toMatchSnapshot()
+  })
+})
+
 it("could be foreach", () => {
   const map = new ObjectMultiMap(obj1)
   map.set(obj1, "233")
