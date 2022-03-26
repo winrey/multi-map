@@ -2,19 +2,12 @@
 import { ArrayMultiMap } from '../src/arrayMap';
 
 it("could be created", () => {
-  new ArrayMultiMap(1)
-  new ArrayMultiMap(10)
-})
-
-it("should check input error", () => {
-  expect(() => new ArrayMultiMap(-1)).toThrow()
-  expect(() => new ArrayMultiMap(0)).toThrow()
-  expect(() => new ArrayMultiMap("test" as any)).toThrow()
-  expect(() => new ArrayMultiMap(undefined as any)).toThrow()
+  new ArrayMultiMap()
+  new ArrayMultiMap()
 })
 
 it("could be set and get", () => {
-  const map = new ArrayMultiMap(1)
+  const map = new ArrayMultiMap()
   expect(map.has(["4"])).toBeFalsy()
   map.set(["4"], "233")
   map.set(["6"], "999")
@@ -39,7 +32,7 @@ it("could be set and get", () => {
 })
 
 it("could be set and get multi", () => {
-  const map = new ArrayMultiMap(3)
+  const map = new ArrayMultiMap()
   expect(map.has(["4", "5", "6"])).toBeFalsy()
   map.set(["4", "5", "6"], "233")
   map.set(["4", "5", "8"], "2333")
@@ -63,19 +56,25 @@ it("could be set and get multi", () => {
   expect(map.has(["3", "5", "6"])).toBeFalsy()
 })
 
-it("should throw if lens doesn't match", () => {
-  const map = new ArrayMultiMap(1)
-  expect(() => map.set([], "")).toThrow()
-  expect(() => map.set(["4", "5"], "")).toThrow()
-  expect(() => map.get(["4", "5"])).toThrow()
-  expect(() => map.has([])).toThrow()
-  expect(() => map.has(["4", "5"])).toThrow()
-  expect(() => map.delete([])).toThrow()
-  expect(() => map.delete(["4", "5"])).toThrow()
+it("should accept unfixed length array", () => {
+  const map = new ArrayMultiMap()
+  expect(() => map.set([], "1")).not.toThrow()
+  expect(() => map.set(["4"], "1234")).not.toThrow()
+  expect(() => map.set(["4", "5"], "12")).not.toThrow()
+  expect(() => map.set(["4", "5", "6"], "123")).not.toThrow()
+  expect(map.get([])).toBe("1")
+  expect(map.get(["4"])).toBe("1234")
+  expect(map.get(["4", "5"])).toBe("12")
+  expect(map.get(["4", "5", "6"])).toBe("123")
+  expect(() => map.delete([])).not.toThrow()
+  expect(() => map.delete(["4", "5"])).not.toThrow()
+  expect(map.get([], "233")).toBe("233")
+  expect(map.get(["4"])).toBe("1234")
+  expect(map.get(["4", "5", "6"])).toBe("123")
 })
 
 it("could delete and clear", () => {
-  const map = new ArrayMultiMap(3)
+  const map = new ArrayMultiMap()
   expect(map.size).toBe(0)
   map.set(["4", "5", "6"], "233")
   map.set(["4", "5", "8"], "2333")
@@ -109,7 +108,7 @@ it("could delete and clear", () => {
 })
 
 it("could clone", () => {
-  const map = new ArrayMultiMap(3)
+  const map = new ArrayMultiMap()
   map.set([4, 5, 6], "233")
   map.set([4, 5, 8], "2333")
   map.set([4, 6, 6], "23333")
@@ -125,7 +124,7 @@ it("could clone", () => {
 
 
 it("could be foreach", () => {
-  const map = new ArrayMultiMap(3)
+  const map = new ArrayMultiMap()
   map.set(["4", "5", "6"], "233")
   map.set(["4", "5", "8"], "2333")
   map.set(["4", "6", "6"], "23333")
@@ -138,7 +137,7 @@ it("could be foreach", () => {
 })
 
 it("could be iterable", () => {
-  const map = new ArrayMultiMap(3)
+  const map = new ArrayMultiMap()
   map.set(["4", "5", "6"], "233")
   map.set(["4", "5", "8"], "2333")
   map.set(["4", "6", "6"], "23333")
@@ -150,7 +149,7 @@ it("could be iterable", () => {
 })
 
 it("entries could be for iterable", () => {
-  const map = new ArrayMultiMap(3)
+  const map = new ArrayMultiMap()
   map.set(["4", "5", "6"], "233")
   map.set(["4", "5", "8"], "2333")
   map.set(["4", "6", "6"], "23333")
@@ -164,7 +163,7 @@ it("entries could be for iterable", () => {
 })
 
 it("keys could be for iterable", () => {
-  const map = new ArrayMultiMap(3)
+  const map = new ArrayMultiMap()
   map.set(["4", "5", "6"], "233")
   map.set(["4", "5", "8"], "2333")
   map.set(["4", "6", "6"], "23333")
@@ -178,7 +177,7 @@ it("keys could be for iterable", () => {
 })
 
 it("values could be for iterable", () => {
-  const map = new ArrayMultiMap(3)
+  const map = new ArrayMultiMap()
   map.set(["4", "5", "6"], "233")
   map.set(["4", "5", "8"], "2333")
   map.set(["4", "6", "6"], "23333")
@@ -192,8 +191,7 @@ it("values could be for iterable", () => {
 })
 
 test("meta", () => {
-  const arr = new ArrayMultiMap(1)
-  expect(arr.keysLens).toBe(1)
+  const arr = new ArrayMultiMap()
   expect(String(arr)).toBe("[object ArrayMultiMap]")
 })
 

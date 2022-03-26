@@ -39,7 +39,7 @@ export class ObjectMultiMap<TKey extends Record<string, any> = Record<string, an
     },
   ) {
     this._keyIndex = this.geneKeysIndex(keyIndex);
-    this._data = new ArrayMultiMap<any[], TValue>(this._keyIndex.length);
+    this._data = new ArrayMultiMap<any[], TValue>();
     this._opts = opts;
   }
 
