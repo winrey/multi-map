@@ -1,7 +1,8 @@
 import { ArrayMultiMap } from './arrayMap';
 
-export type TOptions = {
-  ignoredExtarField?: boolean;
+export type TOptions<TKey, TValue> = {
+  ignoredExtraField?: boolean;
+  defaultFunc?: (key: TKey) => TValue;
 };
 
 /**
@@ -12,7 +13,9 @@ export class ObjectMultiMap<TKey extends Record<string, any> = Record<string, an
 {
   private _keyIndex: string[];
   private _data: ArrayMultiMap<any[], TValue>;
-  private _opts: TOptions;
+  // private _opts: TOptions;
+  private _ignoredExtraField: boolean;
+  private _defaultFunc?: (key: TKey) => TValue;
 
   get [Symbol.toStringTag]() {
     return 'ObjectMultiMap';
@@ -34,13 +37,18 @@ export class ObjectMultiMap<TKey extends Record<string, any> = Record<string, an
 
   constructor(
     keyIndex: Array<string> | Record<string, any>,
-    opts: TOptions = {
-      ignoredExtarField: false,
+    opts: TOptions<TKey, TValue> = {
+      ignoredExtraField: false,
     },
   ) {
     this._keyIndex = this.geneKeysIndex(keyIndex);
+    const { 
+      ignoredExtraField = false,
+      defaultFunc,
+    } = opts;
+    this._ignoredExtraField = ignoredExtraField;
+    this._defaultFunc = defaultFunc;
     this._data = new ArrayMultiMap<any[], TValue>();
-    this._opts = opts;
   }
 
   private geneKeysIndex(key?: Array<string> | Record<string, any>) {
@@ -56,9 +64,9 @@ export class ObjectMultiMap<TKey extends Record<string, any> = Record<string, an
     return key as string[];
   }
 
-  private checkAndParseKeys(key: TKey, ignoredExtarField?: boolean) {
+  private checkAndParseKeys(key: TKey, ignoredExtraField?: boolean) {
     /* istanbul ignore next */
-    ignoredExtarField = ignoredExtarField ?? this._opts.ignoredExtarField;
+    ignoredExtraField = ignoredExtraField ?? this._ignoredExtraField;
     if (typeof key !== 'object' || key instanceof Array) {
       throw new TypeError('key should be an obj');
     }
@@ -70,7 +78,7 @@ export class ObjectMultiMap<TKey extends Record<string, any> = Record<string, an
       }
       kkey = filtered;
     });
-    if (!ignoredExtarField && kkey.length) {
+    if (!ignoredExtraField && kkey.length) {
       throw new TypeError(`key have extra fields: ${JSON.stringify(kkey)}`);
     }
     return this._keyIndex.map((k) => key[k]);
@@ -96,7 +104,15 @@ export class ObjectMultiMap<TKey extends Record<string, any> = Record<string, an
 
   get(keys: TKey, defaultVal?: TValue): TValue | undefined {
     const k = this.checkAndParseKeys(keys);
-    return this._data.get(k, defaultVal);
+    const result = this._data.get(k, defaultVal);
+    if (result === undefined) {
+      const value = this._defaultFunc?.(keys);
+      if (value !== undefined) {
+        this.set(keys, value);
+        return value
+      }
+    }
+    return result;
   }
 
   has(keys: TKey): boolean {

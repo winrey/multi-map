@@ -4,7 +4,12 @@
 export class ArrayMultiMap<TKeys extends any[] = any[], TValue = string> implements Map<TKeys, TValue> {
   private _size = 0;
   private _data = new Map<any, any>();
-  private leafValue = Symbol('leafValue');
+  private _leafValue = Symbol('leafValue');
+  private _defaultFunc?: (keys: TKeys) => TValue;
+
+  constructor(defaultFunc?: (keys: TKeys) => TValue) {
+    this._defaultFunc = defaultFunc;
+  }
 
   get [Symbol.toStringTag]() {
     return 'ArrayMultiMap';
@@ -37,16 +42,16 @@ export class ArrayMultiMap<TKeys extends any[] = any[], TValue = string> impleme
       last.set(key, map);
       return map;
     }, this._data);
-    if (!map.has(this.leafValue)) {
+    if (!map.has(this._leafValue)) {
       this._size += 1;
     }
-    map.set(this.leafValue, data);
+    map.set(this._leafValue, data);
     return this;
   }
 
   get(keys: TKeys, defaultVal?: TValue): TValue | undefined {
     const exit = Symbol('not found');
-    let val = keys.reduce((last: Map<any, any> | symbol, key, i) => {
+    const val = keys.reduce((last: Map<any, any> | symbol, key, i) => {
       if (last === exit) {
         return exit;
       }
@@ -56,10 +61,14 @@ export class ArrayMultiMap<TKeys extends any[] = any[], TValue = string> impleme
       }
       return last.get(key) as Map<any, any>;
     }, this._data);
-    if (val !== exit && !val.has(this.leafValue)) {
-      val = exit;
+    if (val === exit || !val.has(this._leafValue)) {
+      const result = defaultVal ?? this._defaultFunc?.(keys);
+      if (result !== undefined) {
+        this.set(keys, result)
+      }
+      return result;
     }
-    return val === exit ? defaultVal : val.get(this.leafValue);
+    return val.get(this._leafValue);
   }
 
   has(keys: TKeys): boolean {
@@ -77,7 +86,7 @@ export class ArrayMultiMap<TKeys extends any[] = any[], TValue = string> impleme
     if (lastMap === exit) {
       return false;
     }
-    return lastMap.has(this.leafValue);
+    return lastMap.has(this._leafValue);
   }
 
   delete(keys: TKeys) {
@@ -96,11 +105,11 @@ export class ArrayMultiMap<TKeys extends any[] = any[], TValue = string> impleme
       return next;
     }, this._data);
 
-    if (result === exit || !result.has(this.leafValue)) {
+    if (result === exit || !result.has(this._leafValue)) {
       return false;
     }
 
-    result.delete(this.leafValue);
+    result.delete(this._leafValue);
     this._size -= 1;
 
     // clear unnecessary map
@@ -122,7 +131,7 @@ export class ArrayMultiMap<TKeys extends any[] = any[], TValue = string> impleme
   forEach(callbackfn: (value: TValue, keys: TKeys, map: Map<TKeys, TValue>) => void, thisArg?: any) {
     const foreachIfMap = (map: Map<any, any>, keys: any[] = []) => {
       map.forEach((v, k) => {
-        if (k === this.leafValue) {
+        if (k === this._leafValue) {
           callbackfn.apply(thisArg ?? this, [v, [...keys] as TKeys, this]);
           return;
         }
@@ -137,7 +146,7 @@ export class ArrayMultiMap<TKeys extends any[] = any[], TValue = string> impleme
     const that = this;
     const foreachIfMap = function* (map: Map<any, any>, keys: any[] = []): any {
       for (const [k, v] of map) {
-        if (k === that.leafValue) {
+        if (k === that._leafValue) {
           yield [[...keys], v];
           break;
         }

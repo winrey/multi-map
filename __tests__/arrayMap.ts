@@ -50,10 +50,10 @@ it("could be set and get multi", () => {
   expect(map.get(["4", "5", "7"], "")).toBe("")
   expect(map.get(["4", "4", "6"], "")).toBe("")
   expect(map.get(["3", "5", "6"], "")).toBe("")
-  expect(map.has(["1", "1", "1"])).toBeFalsy()
-  expect(map.has(["4", "5", "7"])).toBeFalsy()
-  expect(map.has(["4", "4", "6"])).toBeFalsy()
-  expect(map.has(["3", "5", "6"])).toBeFalsy()
+  expect(map.has(["1", "1", "1"])).toBeTruthy()
+  expect(map.has(["4", "5", "7"])).toBeTruthy()
+  expect(map.has(["4", "4", "6"])).toBeTruthy()
+  expect(map.has(["3", "5", "6"])).toBeTruthy()
 })
 
 it("should accept unfixed length array", () => {
@@ -188,6 +188,19 @@ it("values could be for iterable", () => {
   for (const result of map.values()) {
     expect(result).toMatchSnapshot()
   }
+})
+
+it("could have default function", () => {
+  const map = new ArrayMultiMap(() => "111")
+  expect(map.get(["4", "5", "6"])).toBe("111")
+  expect(map.get(["4", "5", "7"], "222")).toBe("222")
+  map.set(["4", "5", "8"], "333")
+  expect(map.get(["4", "5", "8"], "444")).toBe("333")
+  expect(map.get(["4", "5", "6"])).toBe("111")
+  expect(map.get(["4", "5", "7"])).toBe("222")
+  expect(map.get(["4", "5", "8"])).toBe("333")
+  map.delete(["4", "5", "8"])
+  expect(map.get(["4", "5", "8"])).toBe("111")
 })
 
 test("meta", () => {
