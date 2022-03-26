@@ -4,7 +4,9 @@
 export declare class ArrayMultiMap<TKeys extends any[] = any[], TValue = string> implements Map<TKeys, TValue> {
     private _size;
     private _data;
-    private leafValue;
+    private _leafValue;
+    private _defaultFunc?;
+    constructor(defaultFunc?: (keys: TKeys) => TValue);
     get [Symbol.toStringTag](): string;
     [Symbol.iterator](): IterableIterator<[TKeys, TValue]>;
     get size(): number;

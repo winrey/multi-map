@@ -1,5 +1,6 @@
-export declare type TOptions = {
-    ignoredExtarField?: boolean;
+export declare type TOptions<TKey, TValue> = {
+    ignoredExtraField?: boolean;
+    defaultFunc?: (key: TKey) => TValue;
 };
 /**
  * 注意，这个没有顺序区分
@@ -7,12 +8,13 @@ export declare type TOptions = {
 export declare class ObjectMultiMap<TKey extends Record<string, any> = Record<string, any>, TValue = string> implements Map<TKey, TValue> {
     private _keyIndex;
     private _data;
-    private _opts;
+    private _ignoredExtraField;
+    private _defaultFunc?;
     get [Symbol.toStringTag](): string;
     [Symbol.iterator](): IterableIterator<[TKey, TValue]>;
     get size(): number;
     get keyIndex(): string[];
-    constructor(keyIndex: Array<string> | Record<string, any>, opts?: TOptions);
+    constructor(keyIndex: Array<string> | Record<string, any>, opts?: TOptions<TKey, TValue>);
     private geneKeysIndex;
     private checkAndParseKeys;
     private index2Keys;
