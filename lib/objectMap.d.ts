@@ -19,7 +19,7 @@ export declare class ObjectMultiMap<TKey extends Record<string, any> = Record<st
     set(keys: TKey, data: TValue): this;
     get(keys: TKey, defaultVal?: TValue): TValue | undefined;
     has(keys: TKey): boolean;
-    delete(keys: TKey): any;
+    delete(keys: TKey): boolean;
     clone(): ObjectMultiMap<TKey, TValue>;
     clear(): void;
     forEach(callbackfn: (value: TValue, keys: TKey, map: Map<TKey, TValue>) => void, thisArg?: any): void;
