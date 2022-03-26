@@ -4,7 +4,7 @@
 export class ArrayMultiMap<TKeys extends any[] = any[], TValue = string> implements Map<TKeys, TValue> {
   private _size = 0;
   private _data = new Map<any, any>();
-  private leafValue = Symbol("leafValue");
+  private leafValue = Symbol('leafValue');
 
   get [Symbol.toStringTag]() {
     return 'ArrayMultiMap';
@@ -74,7 +74,7 @@ export class ArrayMultiMap<TKeys extends any[] = any[], TValue = string> impleme
       }
       return last.get(key) as Map<any, any>;
     }, this._data);
-    if (lastMap === exit ) {
+    if (lastMap === exit) {
       return false;
     }
     return lastMap.has(this.leafValue);
