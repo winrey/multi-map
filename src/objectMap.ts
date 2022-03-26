@@ -42,10 +42,7 @@ export class ObjectMultiMap<TKey extends Record<string, any> = Record<string, an
     },
   ) {
     this._keyIndex = this.geneKeysIndex(keyIndex);
-    const { 
-      ignoredExtraField = false,
-      defaultFunc,
-    } = opts;
+    const { ignoredExtraField = false, defaultFunc } = opts;
     this._ignoredExtraField = ignoredExtraField;
     this._defaultFunc = defaultFunc;
     this._data = new ArrayMultiMap<any[], TValue>();
@@ -109,7 +106,7 @@ export class ObjectMultiMap<TKey extends Record<string, any> = Record<string, an
       const value = this._defaultFunc?.(keys);
       if (value !== undefined) {
         this.set(keys, value);
-        return value
+        return value;
       }
     }
     return result;

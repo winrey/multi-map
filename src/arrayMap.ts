@@ -64,7 +64,7 @@ export class ArrayMultiMap<TKeys extends any[] = any[], TValue = string> impleme
     if (val === exit || !val.has(this._leafValue)) {
       const result = defaultVal ?? this._defaultFunc?.(keys);
       if (result !== undefined) {
-        this.set(keys, result)
+        this.set(keys, result);
       }
       return result;
     }
